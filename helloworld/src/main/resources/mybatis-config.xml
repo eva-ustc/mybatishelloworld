@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="dbconfig.properties">
+
+    </properties>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="logImpl" value="LOG4J2"/>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <typeAliases>
+        <package name="ustc.sse.bean"/>
+    </typeAliases>
+    <plugins>
+        <plugin interceptor="ustc.sse.interceptor.MySqlInterceptor">
+            <property name="username" value="eva"/>
+            <property name="password" value="123"/>
+        </plugin>
+    </plugins>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--    XXXmapper.xml映射文件不能喝mybatis-config.xml配置文件在同一目录下,否则会报错 -->
+    <mappers>
+        <!-- 基于映射配置文件 -->
+        <mapper resource="mapper/UserMapper.xml"/>
+        <!-- 基于注解 -->
+        <!--<mapper class="ustc.sse.xmlmapper.UserMapper"/>-->
+       <!-- <mapper class="ustc.sse.mapper.DeptMapper"/>-->
+        <package name="ustc.sse.mapper"/>
+    </mappers>
+</configuration>

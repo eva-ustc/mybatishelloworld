@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ustc.sse.xmlmapper.UserMapper">
+<!--org.mybatis.caches.redis.RedisCache
+org.mybatis.caches.ehcache.EhcacheCache-->
+    <cache eviction="FIFO" type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <select id="getUserById" resultType="User" useCache="true">
+        select id,last_name,email,gender from tb_user where id = #{id}
+    </select>
+    <insert id="insertUser" parameterType="ustc.sse.bean.User"
+        useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_user(last_name,email,gender)
+        VALUES(#{lastName},#{email},#{gender})
+    </insert>
+    <delete id="deleteUserById" parameterType="Integer">
+        DELETE FROM tb_user WHERE id=#{id}
+    </delete>
+    <update id="updateUser" parameterType="User">
+        UPDATE tb_user
+        SET last_name=#{lastName},email=#{email},gender=#{gender}
+        WHERE id=#{id}
+    </update>
+
+</mapper>
